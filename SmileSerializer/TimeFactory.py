@@ -11,10 +11,9 @@ except ImportError:
 
 class TimeFactory(object):
     @classmethod
-    def datetime2timestamp(self, dt, datetime_unit='second'):
-
+    def datetime2timestamp(self, dt=None, datetime_unit='second'):
         ts = arrow.get(dt)
-        if dt.tzinfo:
+        if dt and dt.tzinfo:
             ts.to(timezone.get_current_timezone())
         ts = int(ts.timestamp)
         if datetime_unit == 'millisecond':
@@ -23,12 +22,13 @@ class TimeFactory(object):
         return ts
 
     @classmethod
-    def datetime2str(self, dt):
+    def datetime2str(self, dt=None, format_type="YYYY-MM-DD hh:mm:ss"):
         ts = arrow.get(dt)
-        if dt.tzinfo:
+
+        if dt and dt.tzinfo:
             ts.to(timezone.get_current_timezone())
 
-        return ts.format("YYYY-MM-DD hh:mm:ss")
+        return ts.format(format_type)
 
     @staticmethod
     def get_time_func(datetime_type='timestamp'):
