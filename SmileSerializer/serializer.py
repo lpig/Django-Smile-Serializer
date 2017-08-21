@@ -44,8 +44,8 @@ class Serializer(object):
         return True
 
     def check_foreign_attr(self, attr):
-        _exclude_attr = getattr(self, 'foreign_exclude_attr', [])
         _include_attr = getattr(self, 'foreign_include_attr', [])
+        _exclude_attr = getattr(self, 'foreign_exclude_attr', [])
 
         if _exclude_attr and attr in _exclude_attr:
             return False
