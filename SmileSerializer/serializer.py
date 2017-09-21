@@ -93,7 +93,7 @@ class Serializer(object):
 
     def _get_field(self, field):
 
-        if isinstance(field, (str, unicode, bool, float, int, list, long)):
+        if isinstance(field, (str, six.string_types, bool, float, int, list, six.integer_types)):
             return field
         elif isinstance(field, dict):
             return field
