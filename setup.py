@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
 url = "https://github.com/lpig/Django-Smile-Serializer"
 
@@ -17,6 +17,7 @@ setup(name="Django-Smile-Serializer",
       long_description=long_description,
       install_requires=[
           'arrow',
+          'six',
       ],
       packages=find_packages('.'),
       )

@@ -1,6 +1,7 @@
 # encoding=utf-8
 from __future__ import unicode_literals
 
+import six
 import datetime
 
 try:
@@ -33,7 +34,7 @@ class Serializer(object):
         self.datetime_format = datetime_format
         self.time_func = TimeFactory.get_time_func(datetime_format)
 
-        for k, v in kwargs.iteritems():
+        for k, v in six.iteritems(kwargs):
             setattr(self, k, v)
 
     def check_attr(self, attr):
