@@ -13,7 +13,7 @@ class TimeFactory(object):
     @classmethod
     def datetime2timestamp(self, dt=None, datetime_unit='second'):
         ts = arrow.get(dt)
-        if dt and dt.tzinfo:
+        if dt and getattr(dt, 'tzinfo', None):
             ts.to(timezone.get_current_timezone())
         ts = int(ts.timestamp)
         if datetime_unit == 'millisecond':
@@ -25,7 +25,7 @@ class TimeFactory(object):
     def datetime2str(self, dt=None, format_type="YYYY-MM-DD hh:mm:ss"):
         ts = arrow.get(dt)
 
-        if dt and dt.tzinfo:
+        if dt and getattr(dt, 'tzinfo', None):
             ts.to(timezone.get_current_timezone())
 
         return ts.format(format_type)
