@@ -25,6 +25,7 @@ class Serializer(object):
     exclude_attr = []
     obj = None
     foreign = False
+    use_values = False
 
     def __init__(self, obj, data_type='raw', datetime_unit='second', datetime_format='timestamp', **kwargs):
         self.obj = obj
@@ -104,8 +105,22 @@ class Serializer(object):
 
         return None
 
+    def values_data(self, data):
+        if not isinstance(data, (QuerySet)):
+            raise TypeError('object type must be QuerySet')
+
     def format(self):
         _data = self.data(self.obj)
+
+        output_choice = {
+            'json': json.dumps(_data),
+            'raw': _data,
+            'dict': _data
+        }
+        return output_choice.get(self.data_type, _data)
+
+    def values_format(self):
+        _data = self.values_data(self.obj.values())
 
         output_choice = {
             'json': json.dumps(_data),
