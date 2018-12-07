@@ -14,6 +14,7 @@ try:
     from django.core.paginator import Page
     from django.db.models.query import QuerySet
     from django.db.models.fields.files import ImageFieldFile, FileField
+    from django.db.models import ForeignKey
 except ImportError:
     raise RuntimeError('django is required in django smail serializer')
 
@@ -67,8 +68,9 @@ class Serializer(object):
             obj_dict = {}
 
             concrete_model = data._meta.concrete_model
+
             for field in concrete_model._meta.local_fields:
-                if field.rel is None:
+                if not isinstance(field, ForeignKey):
                     if self.check_attr(field.name) and hasattr(data, field.name):
                         obj_dict[field.name] = self._get_field(getattr(data, field.name))
                 else:
@@ -83,7 +85,7 @@ class Serializer(object):
 
             concrete_model = data._meta.concrete_model
             for field in concrete_model._meta.local_fields:
-                if field.rel is None:
+                if not isinstance(field, ForeignKey):
                     if self.check_foreign_attr(field.name) and hasattr(data, field.name):
                         obj_dict[field.name] = self._get_field(getattr(data, field.name))
                 else:
