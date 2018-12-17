@@ -70,13 +70,16 @@ class Serializer(object):
             concrete_model = data._meta.concrete_model
 
             for field in concrete_model._meta.local_fields:
-                if not isinstance(field, ForeignKey):
+
+                if isinstance(field, (ImageFieldFile, FileField)):
+                    if self.check_attr(field.name) and hasattr(data, field.name):
+                        obj_dict[field.name] = getattr(data, field.name).url or ""
+                elif not isinstance(field, ForeignKey):
                     if self.check_attr(field.name) and hasattr(data, field.name):
                         obj_dict[field.name] = self._get_field(getattr(data, field.name))
                 else:
                     if self.check_attr(field.name) and self.foreign:
                         obj_dict[field.name] = self.foreign_data(getattr(data, field.name))
-
             return obj_dict
 
     def foreign_data(self, data):
@@ -85,13 +88,15 @@ class Serializer(object):
 
             concrete_model = data._meta.concrete_model
             for field in concrete_model._meta.local_fields:
-                if not isinstance(field, ForeignKey):
+                if isinstance(field, (ImageFieldFile, FileField)):
+                    if self.check_attr(field.name) and hasattr(data, field.name):
+                        obj_dict[field.name] = getattr(data, field.name).url or ""
+                elif not isinstance(field, ForeignKey):
                     if self.check_foreign_attr(field.name) and hasattr(data, field.name):
                         obj_dict[field.name] = self._get_field(getattr(data, field.name))
                 else:
                     if self.check_foreign_attr(field.name) and self.foreign:
                         obj_dict[field.name] = self.data(getattr(data, field.name))
-
             return obj_dict
 
     def _get_field(self, field):
@@ -102,9 +107,6 @@ class Serializer(object):
             return field
         elif isinstance(field, (datetime.datetime, datetime.date, datetime.time)):
             return self.time_func(field, self.datetime_unit)
-        elif isinstance(field, (ImageFieldFile, FileField)):
-            return field.url or ""
-
         return None
 
     def values_data(self, data):
