@@ -15,7 +15,7 @@ A Seriailizer for django
 
 Install/安装
 -----------
-`pip install git+https://github.com/lpig/Django-Smile-Serializer.git`
+`pip install Django-Smile-Serializer`
 
 
 Example/例子
