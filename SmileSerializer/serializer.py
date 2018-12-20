@@ -73,7 +73,7 @@ class Serializer(object):
 
                 if isinstance(field, (ImageFieldFile, FileField)):
                     if self.check_attr(field.name) and hasattr(data, field.name):
-                        obj_dict[field.name] = getattr(data, field.name).url or ""
+                        obj_dict[field.name] = getattr(data, field.name).url if getattr(data, field.name) else ""
                 elif not isinstance(field, ForeignKey):
                     if self.check_attr(field.name) and hasattr(data, field.name):
                         obj_dict[field.name] = self._get_field(getattr(data, field.name))
@@ -90,7 +90,7 @@ class Serializer(object):
             for field in concrete_model._meta.local_fields:
                 if isinstance(field, (ImageFieldFile, FileField)):
                     if self.check_attr(field.name) and hasattr(data, field.name):
-                        obj_dict[field.name] = getattr(data, field.name).url or ""
+                        obj_dict[field.name] = getattr(data, field.name).url if getattr(data, field.name) else ""
                 elif not isinstance(field, ForeignKey):
                     if self.check_foreign_attr(field.name) and hasattr(data, field.name):
                         obj_dict[field.name] = self._get_field(getattr(data, field.name))
