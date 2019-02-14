@@ -29,8 +29,11 @@ class Serializer(object):
     use_values = False
 
     def __init__(self, obj, data_type='raw', datetime_unit='second', datetime_format='timestamp', **kwargs):
-        self.obj = obj
 
+        if datetime_format == 'str':
+            datetime_unit = 'YYYY-MM-DD hh:mm:ss'
+
+        self.obj = obj
         self.data_type = data_type
         self.datetime_unit = datetime_unit
         self.datetime_format = datetime_format

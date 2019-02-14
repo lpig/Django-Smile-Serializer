@@ -105,6 +105,7 @@ Parameter/参数
 |include_attr|list|需要序列化的字段|
 |exclude_attr|list|不需要序列化字段|
 |foreign|bool|是否序列化外键（默认否）|
-|datetime_unit|string|序列化日期格式（秒：second、毫秒：millisecond）|
+|datetime_unit|string|序列化日期单位（秒：second、毫秒：millisecond，datetime_format为str时默认为：YYYY-MM-DD hh:mm:ss）|
+|datetime_format|string|序列化日期格式（时间戳：timestamp、字符串：str）|
 |data_type|string|系列化格式（raw、json）|
 
