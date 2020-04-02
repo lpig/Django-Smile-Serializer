@@ -62,7 +62,10 @@ class Serializer(object):
         return True
 
     def data(self, data, extra=None):
-        if isinstance(data, (QuerySet, Page, list)):
+        if data is None:
+            return {}
+
+        elif isinstance(data, (QuerySet, Page, list)):
             convert_data = []
             for d in data:
                 convert_data.append(self.data(d))
